@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Build and deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OPENAI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        sed -i 's/your-api-key-here/${{ secrets.GEMINI_API_KEY }}/g' app.py
+        streamlit run app.py &
+        sleep 5
+        mkdir public
+        mv ./* public/
+        cd public
+        git init
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git commit -m "Deploy to GitHub Pages"
+        git push --force https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git main:gh-pages
