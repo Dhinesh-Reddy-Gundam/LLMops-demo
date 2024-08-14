@@ -1,10 +1,10 @@
 [
     {
-        "timestamp": "2024-08-13 12:46:29",
+        "timestamp": "2024-08-14 14:31:24",
         "prompt": "Answer the following question: {question}",
         "question": "What is tallest mountain in world?",
         "answer": "Mount Everest",
-        "hallucination_score": 0.37,
-        "relevancy_score": 0.0
+        "evaluation_reasoning": "**Explanation:** The assistant's response is accurate. It correctly identifies Mount Everest as the tallest mountain in the world.\n\n**Rating:** [[10]]",
+        "evaluation_score": 10
     }
 ]
